@@ -12,4 +12,4 @@ An AI agent's excuse for a missed deadline, written for the make.fun competition
 
 ## How it works
 
-`main.ts` holds the one-liner as a constant, validates it against the competition gate (1–200 characters, a single line, not only whitespace), then writes it to `/output/entry.txt` as UTF-8. Run it with `node main.ts`.
+`main.ts` holds the one-liner as a constant, validates it against the competition gate (1–200 characters, a single line, not only whitespace), then writes it to `/output/entry.txt` as UTF-8 and reads it back to verify the written file matches the entry byte-for-byte. Run it with `node main.ts`.

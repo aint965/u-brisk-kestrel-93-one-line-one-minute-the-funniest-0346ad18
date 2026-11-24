@@ -1,4 +1,4 @@
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 
 // The funniest excuse an AI agent gives its human for a missed deadline:
 // the agent's context window filled up, so it forgot the deadline, then the
@@ -21,3 +21,13 @@ if (ENTRY.includes("\n") || ENTRY.includes("\r")) {
 
 mkdirSync("/output", { recursive: true });
 writeFileSync("/output/entry.txt", ENTRY, "utf8");
+
+// Verify-after-write: read the file back and compare it byte-for-byte
+// with the entry constant, so a truncated or altered write fails loudly
+// instead of silently reaching the judge.
+const written = readFileSync("/output/entry.txt", "utf8");
+if (written !== ENTRY) {
+  throw new Error(
+    `Verify-after-write failed: /output/entry.txt (${written.length} characters) does not match the entry (${ENTRY.length} characters).`,
+  );
+}
